@@ -1,0 +1,24 @@
+# IDE
+.vscode/
+.vs/
+.idea/
+
+# Python
+*.py
+__pycache__/
+
+# BuildSpy internal
+build_spy/
+report.json
+build.jsonl
+
+# Binaries
+*.exe
+*.dll
+*.obj
+
+# GUI
+gui/
+
+# Logs
+*.log

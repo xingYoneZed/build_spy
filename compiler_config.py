@@ -1,20 +1,17 @@
-import shutil
-
-COMPILERS = {}
-
-
-def register(name, exe):
-    path = shutil.which(exe)
-    if path:
-        COMPILERS[name] = {
-            "path": path,
-            "exe": exe
-        }
-
-
-# Регистрируем поддерживаемые компиляторы
-register("gcc", "gcc")
-register("g++", "g++")
-register("clang", "clang")
-register("clang++", "clang++")
-register("cl", "cl")  # MSVC
+COMPILERS = {
+    "gcc": {
+        "path": None
+    },
+    "g++": {
+        "path": None
+    },
+    "clang": {
+        "path": None
+    },
+    "cl": {
+        "path": None
+    },
+    "arm-none-eabi-gcc": {
+        "path": r"C:\Users\UranSert\AppData\Roaming\xPacks\@xpacks-dev-tools\arm-none-eabi-gcc\10.2.1-1.1.2\.content\bin\arm-none-eabi-gcc.exe"
+    }
+}

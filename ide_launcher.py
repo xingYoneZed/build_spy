@@ -1,49 +1,23 @@
 import os
 import subprocess
-from ide_registry import detect_ides
 
-def launch_ide(ide, project_root):
-    """
-    Запускает выбранную IDE с указанным проектом.
-    ide: словарь из detect_ides()
-    project_root: путь к проекту
-    """
-    if ide is None or not ide.get("path"):
-        raise RuntimeError("Выбранная IDE не найдена или путь пустой")
 
-    exe_path = ide["path"]
+def launch_ide(ide, project_path):
+    if not ide or not ide.get("path"):
+        raise RuntimeError("IDE не выбрана или путь отсутствует")
 
-    # Защита: BuildSpy не запускаем внутри себя
-    if os.path.basename(exe_path).lower().startswith("buildspy"):
-        raise RuntimeError("Нельзя открыть BuildSpy внутри BuildSpy")
+    ide_path = ide["path"]
 
-    # Команда для запуска IDE с проектом
-    cmd = []
+    if not os.path.isfile(ide_path):
+        raise RuntimeError("Файл IDE не найден: " + ide_path)
 
-    ide_type = ide["type"]
+    env = os.environ.copy()
 
-    if ide_type in ["vscode"]:
-        cmd = [exe_path, project_root]
-    elif ide_type in ["eclipse", "stm32cubeide"]:
-        # Eclipse-подобные IDE открываются через workspace
-        cmd = [exe_path, "-data", project_root]
-    elif ide_type in ["keil", "iar", "clion"]:
-        # Проектные IDE
-        cmd = [exe_path, project_root]
-    elif ide_type in ["visual_studio"]:
-        cmd = [exe_path, project_root]
-    else:
-        # fallback
-        cmd = [exe_path, project_root]
+    # Добавляем папку BuildSpy в PATH
+    buildspy_path = os.path.dirname(os.path.abspath(__file__))
+    env["PATH"] = buildspy_path + os.pathsep + env["PATH"]
 
-    # Запуск процесса
-    try:
-        subprocess.Popen(cmd)
-    except Exception as e:
-        raise RuntimeError(f"Не удалось запустить IDE {ide['name']}: {e}")
-
-def get_ides_list():
-    """
-    Возвращает список доступных IDE для GUI.
-    """
-    return detect_ides()
+    subprocess.Popen(
+        [ide_path, project_path],
+        env=env
+    )

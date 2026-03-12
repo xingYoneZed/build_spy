@@ -1,2 +1,2 @@
 @echo off
-"%~dp0run_gui.exe" arm-none-eabi-gcc %*
+"%~dp0run_gui.exe" --wrap arm-none-eabi-gcc %*

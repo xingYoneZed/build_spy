@@ -1,17 +1,18 @@
 COMPILERS = {
     "gcc": {
-        "path": None
+        "names": ["gcc"],
+        "path": "gcc"
     },
     "g++": {
-        "path": None
-    },
-    "clang": {
-        "path": None
-    },
-    "cl": {
-        "path": None
+        "names": ["g++"],
+        "path": "g++"
     },
     "arm-none-eabi-gcc": {
-        "path": r"C:\Users\UranSert\AppData\Roaming\xPacks\@xpack-dev-tools\arm-none-eabi-gcc\10.2.1-1.1.2\.content\bin\arm-none-eabi-gcc.exe"
+        "names": ["arm-none-eabi-gcc"],
+        "path": "arm-none-eabi-gcc"
+    },
+    "arm-none-eabi-g++": {
+        "names": ["arm-none-eabi-g++"],
+        "path": "arm-none-eabi-g++"
     }
 }
